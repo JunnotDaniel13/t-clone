@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// Necessary for Next auth
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
+
+model User {
+    id            String    @id @default(cuid())
+    username      String?   @unique
+    password      String?
+    email         String?   @unique
+    name          String?
+    bio           String?
+    image         String?
+    location      String?
+    website       String?
+    join_date     DateTime  @default(now())
+    emailVerified DateTime?
+
+    accounts  Account[]
+    sessions  Session[]
+    tweets    Tweet[]
+    followers Follower[]      @relation("followerUser")
+    following Follower[]      @relation("followedUser")
+    mentions  Mention[]
+    retweets  Retweet[]
+    likes     Like[]
+    senders   DirectMessage[] @relation("sender")
+    recipient DirectMessage[] @relation("recipient")
+    lists     List[]
+}
+
+model Tweet {
+    tweet_id      String    @id @default(cuid())
+    userId        String
+    user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    tweet_text    String
+    tweet_date    DateTime  @default(now())
+    retweet_count Int       @default(0)
+    like_count    Int       @default(0)
+    reply_count   Int       @default(0)
+    mentions      Mention[]
+    retweets      Retweet[]
+    likes         Like[]
+}
+
+model Hashtag {
+    hashtag_id   String @id @default(cuid())
+    hashtag_text String
+}
+
+model Follower {
+    follower_id      String @id @default(cuid())
+    userId           String
+    follower_user_id String
+    user             User   @relation("followedUser", fields: [userId], references: [id])
+    follower_user    User   @relation("followerUser", fields: [follower_user_id], references: [id])
+
+    @@unique([userId, follower_user_id])
+}
+
+model Mention {
+    mention_id String @id @default(cuid())
+    userId     String
+    tweet_id   String
+
+    user  User  @relation(fields: [userId], references: [id])
+    tweet Tweet @relation(fields: [tweet_id], references: [tweet_id])
+}
+
+model Retweet {
+    retweet_id   String   @id @default(cuid())
+    userId       String
+    tweet_id     String
+    retweet_date DateTime @default(now())
+
+    user  User  @relation(fields: [userId], references: [id])
+    tweet Tweet @relation(fields: [tweet_id], references: [tweet_id])
+}
+
+model Like {
+    like_id   String   @id @default(cuid())
+    userId    String
+    tweet_id  String
+    like_date DateTime @default(now())
+
+    user  User  @relation(fields: [userId], references: [id])
+    tweet Tweet @relation(fields: [tweet_id], references: [tweet_id])
+}
+
+model DirectMessage {
+    message_id   String   @id @default(cuid())
+    sender_id    String
+    recipient_id String
+    message_text String
+    message_date DateTime
+
+    user_sender   User @relation("sender", fields: [sender_id], references: [id])
+    user_recipent User @relation("recipient", fields: [recipient_id], references: [id])
+}
+
+model List {
+    list_id          String  @id @default(cuid())
+    user_id          String
+    list_name        String
+    list_description String?
+
+    user User @relation(fields: [user_id], references: [id])
+}
+
+model TrendingTopic {
+    topic_id    String @id @default(cuid())
+    topic_text  String
+    topic_count String
+}

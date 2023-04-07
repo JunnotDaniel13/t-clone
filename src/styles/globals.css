@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.no-scroll {
+  overflow: hidden;
+}
+
+textarea {
+  min-height: 5em;
+}
+
+@layer components {
+  .b-border {
+    @apply border-b border-gray-400 dark:border-gray-600;
+  }
+  .t-border {
+    @apply border-t border-gray-400 dark:border-gray-600;
+  }
+  .r-border {
+    @apply border-r border-gray-400 dark:border-gray-600;
+  }
+  .l-border {
+    @apply border-l border-gray-400 dark:border-gray-600;
+  }
+  .a-border {
+    @apply border-l border-gray-400 dark:border-gray-600;
+  }
+  .x-border {
+    @apply border-x border-gray-400 dark:border-gray-600;
+  }
+  .y-border {
+    @apply border-y border-gray-400 dark:border-gray-600;
+  }
+
+  .menu-icon {
+    @apply fill-black dark:fill-white;
+  }
+
+  .icon {
+    @apply h-5 w-5 fill-slate-800 dark:fill-slate-400;
+  }
+
+  .menu-hover {
+    @apply rounded-full transition-colors hover:bg-gray-200 dark:hover:bg-gray-800;
+  }
+
+  .btn-primary {
+    @apply rounded-full bg-twitter px-3 py-1 text-white;
+  }
+}
