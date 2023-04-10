@@ -1,5 +1,6 @@
 import { signOut } from "next-auth/react";
 import { CloseIcon, AccordionChevron } from "~/icons";
+import ThemeSwitch from "../ui/ThemeSwitch";
 import AccountInfo from "./AccountInfo";
 import MenuNavigation from "./MenuNavigation";
 
@@ -40,6 +41,15 @@ function Drawer({ isMenuOpen, onSetMenuOpen }: Props) {
               <p>Settings and Support</p>
               <AccordionChevron className="fill-black dark:fill-white" />
             </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <ThemeSwitch />
+            <button
+              className="btn-lg-primary border border-slate-500 bg-transparent text-black hover:bg-slate-200 dark:text-white dark:hover:bg-slate-800"
+              onClick={() => void signOut()}
+            >
+              Sign out
+            </button>
           </div>
         </div>
       </div>

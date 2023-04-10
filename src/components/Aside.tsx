@@ -5,6 +5,7 @@ import MenuNavigation from "./header/MenuNavigation";
 import { api } from "~/utils/api";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import ThemeSwitch from "./ui/ThemeSwitch";
 
 function Aside() {
   const { setTheme, theme } = useTheme();
@@ -27,18 +28,7 @@ function Aside() {
       <div className="fixed flex h-full flex-col items-center justify-between pb-4 md:w-12">
         <MenuNavigation />
         <div className="flex flex-col gap-4">
-          <button
-            className="flex h-10 w-10 items-center justify-center rounded-full"
-            onClick={() =>
-              theme === "dark" ? setTheme("light") : setTheme("dark")
-            }
-          >
-            {theme === "dark" ? (
-              <Sun className="h-8 w-8 stroke-white" />
-            ) : (
-              <Moon className="h-8 w-8 stroke-black" />
-            )}
-          </button>
+          <ThemeSwitch />
           <button
             type="button"
             className="relative"
