@@ -6,8 +6,9 @@ import type { RouterOutputs } from "~/utils/api";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import TweetActions from "./TweetActions";
 
-type Tweet = RouterOutputs["tweet"]["getAllTweet"][number];
+export type Tweet = RouterOutputs["tweet"]["getAllTweet"][number];
 
 dayjs.extend(relativeTime);
 
@@ -16,11 +17,6 @@ interface Props {
 }
 
 function TweetItem({ tweet }: Props) {
-  const notify = () =>
-    toast.error(
-      "Oops! We're working to fix it ASAP. Thanks for your patience!"
-    );
-
   return (
     <div className="b-border grid grid-cols-6 gap-2 p-2 md:flex ">
       <div className="aspect-square h-12 w-12 ">
@@ -62,24 +58,7 @@ function TweetItem({ tweet }: Props) {
 
         <div className="">{tweet.tweet_text}</div>
 
-        <div className="mt-2 flex justify-between">
-          <div className="flex items-center gap-1" onClick={notify}>
-            <Reply className="icon" />
-            <span>{tweet.reply_count !== 0 ? tweet.reply_count : ""}</span>
-          </div>
-          <div className="flex items-center gap-1" onClick={notify}>
-            <Retweet className="icon" />
-            <span>{tweet.retweet_count !== 0 ? tweet.retweet_count : ""}</span>
-          </div>
-          <div className="flex items-center gap-1" onClick={notify}>
-            <Like className="icon" />
-            <span>{tweet.like_count !== 0 ? tweet.like_count : ""}</span>
-          </div>
-          <div className="flex items-center gap-1" onClick={notify}>
-            <Share className="icon" />
-            <span></span>
-          </div>
-        </div>
+        <TweetActions tweet={tweet} />
       </div>
     </div>
   );
