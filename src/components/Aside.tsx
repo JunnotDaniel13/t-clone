@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useTheme } from "next-themes";
 import MenuNavigation from "./header/MenuNavigation";
 import { api } from "~/utils/api";
 import { signOut, useSession } from "next-auth/react";
@@ -7,7 +6,6 @@ import { useEffect, useState } from "react";
 import ThemeSwitch from "./ui/ThemeSwitch";
 
 function Aside() {
-  const { setTheme, theme } = useTheme();
   const { data } = useSession();
   const [isOpen, setOpen] = useState(false);
 

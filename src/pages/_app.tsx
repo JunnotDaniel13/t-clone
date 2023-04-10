@@ -19,7 +19,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class" enableSystem={true}>
-        <Toaster position="bottom-center" />
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            success: {
+              style: { background: "green", color: "white" },
+            },
+            error: {
+              style: { background: "red", color: "white" },
+            },
+          }}
+        />
         {pathname === "/compose/tweet" ? (
           <Component {...pageProps} />
         ) : (

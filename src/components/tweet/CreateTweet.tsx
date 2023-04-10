@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import router from "next/router";
 import { api } from "~/utils/api";
-
+import toast from "react-hot-toast";
 const CreateTweet = () => {
   const { data: sessionData } = useSession();
   const [tweet, setTweet] = useState("");
@@ -16,6 +16,7 @@ const CreateTweet = () => {
     onSuccess() {
       void ctx.tweet.getAllTweet.invalidate();
       void router.push("/home");
+      toast.success("Tweet Created");
     },
   });
 
