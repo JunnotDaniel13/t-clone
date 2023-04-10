@@ -24,7 +24,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="grid min-h-full grid-cols-4 md:mx-12 md:grid-cols-12">
-      <Aside />
+      {user?.username && <Aside />}
       <main className="relative col-span-11 flex min-h-screen flex-col bg-white dark:bg-black">
         {pathname.includes("[slug]") ? <></> : user?.username && <Header />}
         {children}

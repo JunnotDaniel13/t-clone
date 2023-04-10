@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { Sun, Moon } from "~/icons";
 import MenuNavigation from "./header/MenuNavigation";
 import { api } from "~/utils/api";
 import { signOut, useSession } from "next-auth/react";
@@ -21,7 +20,7 @@ function Aside() {
     document.getElementById("logout")?.classList.toggle("invisible");
   }, [isOpen]);
 
-  if (!user) return <></>;
+  if (!user || !user.username) return <></>;
 
   return (
     <aside className="relative z-20 col-span-1 hidden max-h-full overflow-hidden md:block">

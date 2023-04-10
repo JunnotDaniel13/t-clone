@@ -23,9 +23,6 @@ textarea {
   .l-border {
     @apply border-l border-gray-400 dark:border-gray-600;
   }
-  .a-border {
-    @apply border-l border-gray-400 dark:border-gray-600;
-  }
   .x-border {
     @apply border-x border-gray-400 dark:border-gray-600;
   }

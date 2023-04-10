@@ -46,13 +46,16 @@ const Home: NextPage = () => {
         <meta name="description" content="Twitter Clone Home Page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {sessionData?.user && !user?.username ? <SetUsername /> : <></>}
-      <main className="md:x-border relative flex min-h-screen flex-col bg-white dark:bg-black ">
-        <div className="hidden md:block">
-          <CreateTweet />
-        </div>
-        <Tweets />
-      </main>
+      {sessionData?.user && !user?.username ? (
+        <SetUsername />
+      ) : (
+        <main className="md:x-border relative flex min-h-screen flex-col bg-white dark:bg-black ">
+          <div className="hidden md:block">
+            <CreateTweet />
+          </div>
+          <Tweets />
+        </main>
+      )}
     </>
   );
 };
