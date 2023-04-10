@@ -1,11 +1,9 @@
 import dayjs from "dayjs";
 import Image from "next/image";
-import { Reply, Retweet, Like, Share } from "~/icons";
 import type { RouterOutputs } from "~/utils/api";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
-import toast from "react-hot-toast";
 import TweetActions from "./TweetActions";
 
 export type Tweet = RouterOutputs["tweet"]["getAllTweet"][number];
@@ -55,10 +53,8 @@ function TweetItem({ tweet }: Props) {
             </span>
           </div>
         </div>
-
         <div className="">{tweet.tweet_text}</div>
-
-        <TweetActions tweet={tweet} />
+        {tweet && <TweetActions tweet={tweet} />}
       </div>
     </div>
   );

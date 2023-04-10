@@ -11,6 +11,7 @@ export const tweetRouter = createTRPCRouter({
     return ctx.prisma.tweet.findMany({
       orderBy: [{ tweet_date: "desc" }],
       include: {
+        likes: { select: { like_id: true, userId: true, user: true } },
         user: {
           select: {
             emailVerified: true,
@@ -31,6 +32,7 @@ export const tweetRouter = createTRPCRouter({
         },
         orderBy: [{ tweet_date: "desc" }],
         include: {
+          likes: { select: { like_id: true, userId: true, user: true } },
           user: {
             select: {
               emailVerified: true,
@@ -49,6 +51,16 @@ export const tweetRouter = createTRPCRouter({
         data: {
           tweet_text: input.tweet_text,
           userId: input.userId,
+        },
+      });
+    }),
+  like: publicProcedure
+    .input(z.object({ userId: z.string(), tweet_id: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.like.create({
+        data: {
+          userId: input.userId,
+          tweet_id: input.tweet_id,
         },
       });
     }),

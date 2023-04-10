@@ -29,6 +29,7 @@ import {
   MyIconBack,
   MyIconMoon,
   MyIconSun,
+  MyIconLiked,
 } from "../../public/icons/dist/index";
 
 export const HomeIcon = MyIconHome;
@@ -61,3 +62,4 @@ export const Tweet = MyIconTweet;
 export const Back = MyIconBack;
 export const Sun = MyIconSun;
 export const Moon = MyIconMoon;
+export const Liked = MyIconLiked;
