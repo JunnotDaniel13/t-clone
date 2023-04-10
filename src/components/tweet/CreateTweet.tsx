@@ -1,4 +1,4 @@
-import { FormEvent, forwardRef, useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -14,8 +14,8 @@ const CreateTweet = () => {
   const { mutate, isLoading: isTweeting } = api.tweet.create.useMutation({
     networkMode: "always",
     onSuccess() {
-      ctx.tweet.getAllTweet.invalidate();
-      router.push("/home");
+      void ctx.tweet.getAllTweet.invalidate();
+      void router.push("/home");
     },
   });
 

@@ -4,16 +4,12 @@ import { useRouter } from "next/router";
 import React from "react";
 import {
   ProfileIcon,
-  TopicsIcon,
-  BookmarksIcon,
-  ListsIcon,
-  TwitterCircleIcon,
   LogoIcon,
   HomeActiveIcon,
   ProfileActiveIcon,
   HomeIcon,
-} from "~/pages/icons";
-import { api, RouterOutputs } from "~/utils/api";
+} from "~/icons";
+import { api } from "~/utils/api";
 
 function MenuNavigation() {
   const { pathname } = useRouter();
@@ -32,7 +28,7 @@ function MenuNavigation() {
         <ProfileIcon className="menu-icon" />
       ),
       value: "profile",
-      link: `@${user?.username}`,
+      link: `@${user?.username ? user?.username : "invalid"}`,
     },
     // {
     //   icon: <TopicsIcon className="menu-icon" />,

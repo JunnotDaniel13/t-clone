@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { SwitchIcon } from "~/pages/icons";
+import { SwitchIcon } from "~/icons";
 import { api } from "~/utils/api";
 
 function AccountInfo() {

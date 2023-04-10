@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import Image from "next/image";
-import { Reply, Retweet, Like, Share } from "~/pages/icons";
-import { RouterOutputs } from "~/utils/api";
+import { Reply, Retweet, Like, Share } from "~/icons";
+import type { RouterOutputs } from "~/utils/api";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
@@ -24,7 +24,7 @@ function TweetItem({ tweet }: Props) {
   return (
     <div className="b-border grid grid-cols-6 gap-2 p-2 md:flex ">
       <div className="aspect-square h-12 w-12 ">
-        <Link href={`@${tweet.user.username}`}>
+        <Link href={`@${tweet.user.username ? tweet.user.username : ""}`}>
           <Image
             src={tweet?.user?.image ? tweet?.user?.image : ""}
             alt="Profile picture"
@@ -38,16 +38,18 @@ function TweetItem({ tweet }: Props) {
         <div className="flex items-center justify-between gap-2 ">
           <div className="flex gap-1 truncate">
             <Link
-              href={`@${tweet.user.username}`}
+              href={`@${tweet.user.username ? tweet.user.username : ""}`}
               className="truncate hover:underline"
             >
               <span className="w-max  font-bold">{tweet.user.name}</span>
             </Link>
             <Link
-              href={`@${tweet.user.username}`}
+              href={`@${tweet.user.username ? tweet.user.username : ""}`}
               className="truncate hover:underline"
             >
-              <span className=" text-slate-800 dark:text-slate-400">{`@${tweet.user.username} `}</span>
+              <span className=" text-slate-800 dark:text-slate-400">{`@${
+                tweet.user.username ? tweet.user.username : ""
+              } `}</span>
             </Link>
             <span className="truncate text-slate-800 dark:text-slate-400">
               &middot;

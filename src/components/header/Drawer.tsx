@@ -1,4 +1,5 @@
-import { CloseIcon, AccordionChevron } from "~/pages/icons";
+import { signOut } from "next-auth/react";
+import { CloseIcon, AccordionChevron } from "~/icons";
 import AccountInfo from "./AccountInfo";
 import MenuNavigation from "./MenuNavigation";
 
@@ -23,7 +24,7 @@ function Drawer({ isMenuOpen, onSetMenuOpen }: Props) {
             <CloseIcon className="h-5 w-5 fill-black dark:fill-white" />
           </div>
         </div>
-        <div className="h-full overflow-y-scroll p-3 pb-16">
+        <div className="h-full overflow-y-scroll p-3 ">
           <AccountInfo />
           <MenuNavigation />
           <div>

@@ -1,16 +1,13 @@
 import { useEffect } from "react";
 import { type NextPage } from "next";
-import Image from "next/image";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useTheme } from "next-themes";
 
 import { api } from "~/utils/api";
 import SetUsername from "~/components/SetUsername";
 import Loading from "~/components/Loading";
 import Tweets from "~/components/tweet/TweetList";
-import { Like, More, Reply, Retweet, Share } from "./icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import CreateTweet from "~/components/tweet/CreateTweet";
@@ -28,9 +25,9 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!sessionData) {
-      router.push("/");
+      void router.push("/");
     }
-  }, [sessionData]);
+  }, [sessionData, router]);
 
   useEffect(() => {
     if (!user?.username) {

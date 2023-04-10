@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import { useEffect } from "react";
@@ -12,12 +12,12 @@ const Home: NextPage = () => {
   const router = useRouter();
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/home");
+      void router.push("/home");
     }
     if (status === "unauthenticated") {
-      router.push("/login");
+      void router.push("/login");
     }
-  }, [sessionData]);
+  }, [sessionData, router, status]);
 
   const {
     data: user,
@@ -42,6 +42,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div>hello world</div>
     </>
   );
 };

@@ -48,4 +48,7 @@ textarea {
   .btn-primary {
     @apply rounded-full bg-twitter px-3 py-1 text-white;
   }
+  .btn-lg-primary {
+    @apply rounded-full bg-twitter px-9 py-3 text-white;
+  }
 }

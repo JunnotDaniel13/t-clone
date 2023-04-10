@@ -5,7 +5,7 @@ import {
   NotificationsIcon,
   SearchIcon,
   Tweet,
-} from "../pages/icons/index";
+} from "../icons/index";
 
 const Navigation: React.FC = () => {
   return (

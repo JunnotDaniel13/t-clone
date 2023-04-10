@@ -1,17 +1,11 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { useTheme } from "next-themes";
-import { api } from "~/utils/api";
 import { useRouter } from "next/router";
-import { Back } from "../icons";
+import { Back } from "../../icons";
 import CreateTweet from "~/components/tweet/CreateTweet";
 
 function Tweet() {
   const { data: sessionData } = useSession();
   const router = useRouter();
-
-  const { setTheme, theme } = useTheme();
 
   if (!sessionData) return <></>;
 
@@ -23,13 +17,6 @@ function Tweet() {
         </div>
       </div>
       <CreateTweet />
-      <button
-        onClick={() =>
-          theme === "dark" ? setTheme("light") : setTheme("dark")
-        }
-      >
-        {theme === "dark" ? "Light" : "Dark"}
-      </button>
     </div>
   );
 }

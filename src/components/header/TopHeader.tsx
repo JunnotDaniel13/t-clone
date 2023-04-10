@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { LogoIcon } from "~/pages/icons";
+import { LogoIcon } from "~/icons";
 
 interface Props {
   onSetMenu: () => void;

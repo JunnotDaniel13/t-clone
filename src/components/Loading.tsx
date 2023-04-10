@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoIcon } from "~/pages/icons";
+import { LogoIcon } from "~/icons";
 
 function Loading() {
   return (

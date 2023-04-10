@@ -1,26 +1,23 @@
 import dayjs from "dayjs";
-import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import LoadingSpinner from "~/components/LoadingSpinner";
 import TweetItem from "~/components/tweet/TweetItem";
 import { api } from "~/utils/api";
-import { Back } from "./icons";
+import { Back } from "../icons";
 
 function Profile() {
   const { asPath, back } = useRouter();
-  const { data } = useSession();
 
   const user_name = asPath.split("/")[1]?.split("@")[1] || "";
 
-  const { data: userdata, isLoading: isUserLoading } =
-    api.user.userinfo.useQuery(
-      { username: user_name },
-      {
-        networkMode: "always",
-      }
-    );
+  const { data: userdata } = api.user.userinfo.useQuery(
+    { username: user_name },
+    {
+      networkMode: "always",
+    }
+  );
 
   const { data: tweets, isLoading: isTweetLoading } =
     api.tweet.getTweetsByUser.useQuery(

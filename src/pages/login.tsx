@@ -7,17 +7,19 @@ function Login() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/login");
+      void router.push("/login");
     }
     if (status === "authenticated") {
-      router.push("/home");
+      void router.push("/home");
     }
-  }, [sessionData, status]);
+  }, [status]);
+
+  if (status === "authenticated") return <></>;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex h-full w-full flex-col items-center justify-center ">
       <button
-        className="bg-green/10 rounded-full border px-10 py-3 font-semibold text-green-400 no-underline transition hover:bg-white/20"
+        className="btn-lg-primary"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}

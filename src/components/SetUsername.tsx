@@ -14,7 +14,7 @@ function SetUsername() {
   } = api.user.update.useMutation({
     networkMode: "always",
     onSuccess() {
-      ctx.user.info.invalidate();
+      void ctx.user.info.invalidate();
     },
   });
 
