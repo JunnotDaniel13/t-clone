@@ -38,7 +38,7 @@ const CreateTweet = () => {
   if (!sessionData) return <></>;
 
   return (
-    <div className="md:b-border flex w-full gap-2 md:px-2">
+    <div className="md:b-border flex w-full gap-2 pt-2 md:px-2">
       <div className="">
         <Image
           src={sessionData.user.image ? sessionData.user.image : ""}
