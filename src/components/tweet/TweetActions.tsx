@@ -1,8 +1,8 @@
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Reply, Retweet, Like, Share, Liked } from "~/icons";
+import { Reply, Retweet, Like, Liked } from "~/icons";
 import { api } from "~/utils/api";
 
 interface Tweet {
@@ -24,18 +24,18 @@ function TweetActions({ tweet }: Tweet) {
   const ctx = api.useContext();
   const [isLiked, setLike] = useState(false);
   const { data: sessionData } = useSession();
-  const { reply_count, retweet_count, tweet_id, userId, likes } = tweet;
+  const { reply_count, retweet_count, tweet_id, likes } = tweet;
 
   const { mutate } = api.tweet.like.useMutation({
     networkMode: "always",
     onSuccess() {
-      ctx.tweet.invalidate();
+      void ctx.tweet.invalidate();
     },
   });
   const { mutate: dislike } = api.tweet.dislike.useMutation({
     networkMode: "always",
     onSuccess() {
-      ctx.tweet.invalidate();
+      void ctx.tweet.invalidate();
     },
   });
   const likePost = () => {

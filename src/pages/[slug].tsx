@@ -13,7 +13,7 @@ function Profile() {
 
   const user_name = asPath.split("/")[1]?.split("@")[1] || "";
 
-  const { data: userdata, isLoading } = api.user.userinfo.useQuery(
+  const { data: userdata } = api.user.userinfo.useQuery(
     { username: user_name },
     {
       networkMode: "always",
@@ -111,7 +111,7 @@ function Profile() {
 
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import superjson from "superjson";
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 import { prisma } from "~/server/db";
 
 export const getStaticProps: GetStaticProps = async (context) => {

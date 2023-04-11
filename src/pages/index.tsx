@@ -13,8 +13,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (status === "authenticated") {
       void router.push("/home");
-    }
-    if (status === "unauthenticated") {
+    } else if (status === "unauthenticated") {
       void router.push("/login");
     }
   }, [sessionData, router, status]);
