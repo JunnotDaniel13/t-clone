@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import LoadingSpinner from "~/components/LoadingSpinner";
 import TweetItem from "~/components/tweet/TweetItem";
+import { appRouter } from "~/server/api/root";
 import { api } from "~/utils/api";
 import { Back } from "../icons";
 
@@ -12,7 +13,7 @@ function Profile() {
 
   const user_name = asPath.split("/")[1]?.split("@")[1] || "";
 
-  const { data: userdata } = api.user.userinfo.useQuery(
+  const { data: userdata, isLoading } = api.user.userinfo.useQuery(
     { username: user_name },
     {
       networkMode: "always",
@@ -26,8 +27,6 @@ function Profile() {
         networkMode: "always",
       }
     );
-
-  if (isTweetLoading) return <LoadingSpinner />;
 
   if (!userdata) return <></>;
 
@@ -96,14 +95,45 @@ function Profile() {
           </div>
         </div>
         <div>
-          {tweets &&
+          {isTweetLoading ? (
+            <LoadingSpinner />
+          ) : (
+            tweets &&
             tweets.map((tweet) => (
               <TweetItem tweet={tweet} key={tweet.tweet_id} />
-            ))}
+            ))
+          )}
         </div>
       </div>
     </>
   );
 }
+
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import superjson from "superjson";
+import { GetStaticProps } from "next";
+import { prisma } from "~/server/db";
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: { prisma, session: null },
+    transformer: superjson,
+  });
+
+  const slug = context.params?.slug as string;
+
+  if (typeof slug !== "string") throw new Error("No slug");
+
+  const username = slug.replace("@", "");
+
+  await ssg.user.userinfo.prefetch({ username });
+
+  return { props: { trpcState: ssg.dehydrate() } };
+};
+
+export const getStaticPaths = () => {
+  return { paths: [], fallback: "blocking" };
+};
 
 export default Profile;
