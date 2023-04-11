@@ -22,31 +22,31 @@ function MenuNavigation() {
 
   const menuMap = [
     {
-      icon: pathname.includes("/@") ? (
-        <ProfileActiveIcon className="menu-icon" />
+      icon: pathname.includes("[slug]") ? (
+        <ProfileActiveIcon className="menu-icon h-7 w-7" />
       ) : (
-        <ProfileIcon className="menu-icon" />
+        <ProfileIcon className="menu-icon h-7 w-7" />
       ),
       value: "profile",
       link: `@${user?.username ? user?.username : "invalid"}`,
     },
     // {
-    //   icon: <TopicsIcon className="menu-icon" />,
+    //   icon: <TopicsIcon className="menu-icon h-7 w-7" />,
     //   value: "topics",
     //   link: `topics`,
     // },
     // {
-    //   icon: <BookmarksIcon className="menu-icon" />,
+    //   icon: <BookmarksIcon className="menu-icon h-7 w-7" />,
     //   link: `bookmarks`,
     //   value: "bookmarks",
     // },
     // {
-    //   icon: <ListsIcon className="menu-icon" />,
+    //   icon: <ListsIcon className="menu-icon h-7 w-7" />,
     //   value: "lists",
     //   link: `lists`,
     // },
     // {
-    //   icon: <TwitterCircleIcon className="menu-icon" />,
+    //   icon: <TwitterCircleIcon className="menu-icon h-7 w-7" />,
     //   value: "twitter circle",
     //   link: `twitter-circle`,
     // },
@@ -67,7 +67,7 @@ function MenuNavigation() {
           ) : (
             <HomeIcon className="menu-icon h-7 w-7" />
           )}
-          <p className="text-xl font-bold md:hidden">Profil</p>
+          <p className="text-xl font-bold capitalize md:hidden">Profil</p>
         </div>
       </Link>
       {menuMap.map((menu) => (
@@ -77,7 +77,9 @@ function MenuNavigation() {
             key={menu.value}
           >
             {menu.icon}
-            <p className="text-xl font-bold md:hidden">{menu.value}</p>
+            <p className="text-xl font-bold capitalize md:hidden">
+              {menu.value}
+            </p>
           </div>
         </Link>
       ))}

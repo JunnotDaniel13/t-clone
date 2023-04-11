@@ -17,6 +17,8 @@ const Header: React.FC = () => {
     } else {
       document.body.classList.remove("no-scroll");
     }
+
+    return () => document.body.classList.remove("no-scroll");
   }, [isMenuOpen]);
 
   if (!sessionData) return <></>;
