@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Reply, Retweet, Like, Share, Liked } from "~/icons";
 import { api } from "~/utils/api";
@@ -21,6 +22,7 @@ interface Tweet {
 
 function TweetActions({ tweet }: Tweet) {
   const ctx = api.useContext();
+  const [isLiked, setLike] = useState(false);
   const { data: sessionData } = useSession();
   const { reply_count, retweet_count, tweet_id, userId, likes } = tweet;
 
@@ -30,42 +32,56 @@ function TweetActions({ tweet }: Tweet) {
       ctx.tweet.invalidate();
     },
   });
+  const { mutate: dislike } = api.tweet.dislike.useMutation({
+    networkMode: "always",
+    onSuccess() {
+      ctx.tweet.invalidate();
+    },
+  });
   const likePost = () => {
-    const userLiked = tweet.likes.filter(
-      (like) => like.userId === userId
-    ).length;
-    if (userLiked >= 1) return;
+    setLike(true);
+    const userLikedTweet = tweet.likes.filter(
+      (like) => like.userId === sessionData?.user.id
+    );
+    const userLiked = userLikedTweet.length;
+    if (userLiked === 1) {
+      setLike(false);
+      return dislike({ like_id: userLikedTweet[0]?.like_id || "" });
+    }
     mutate({ userId: sessionData ? sessionData?.user.id : "", tweet_id });
   };
-  const notify = () =>
+  const notify = (message: string) =>
     toast.error(
-      "Oops! We're working to fix it ASAP. Thanks for your patience!"
+      `Oops! ${message} is not working right now, we're fixing it ASAP. Thanks for your patience!`
     );
   const like = likes.filter((like) => like.userId === sessionData?.user.id)[0];
 
   if (!sessionData) return <></>;
   return (
     <div className="mt-4 flex justify-between">
-      <div className="flex items-center gap-1" onClick={notify}>
+      <div className="flex items-center gap-1" onClick={() => notify("Reply")}>
         <Reply className="icon" />
         <span>{reply_count}</span>
       </div>
-      <div className="flex items-center gap-1" onClick={notify}>
+      <div
+        className="flex items-center gap-1"
+        onClick={() => notify("Retweet")}
+      >
         <Retweet className="icon" />
         <span>{retweet_count}</span>
       </div>
-      <div className="flex items-center gap-1" onClick={() => likePost()}>
-        {sessionData?.user.id === like?.user.id ? (
+      <div
+        className="flex items-center gap-1 rounded-full py-1 px-3 transition-all hover:bg-pink-600/30 dark:hover:bg-pink-600/20 "
+        onClick={() => likePost()}
+      >
+        {isLiked || sessionData?.user.id === like?.user.id ? (
           <Liked className="icon" />
         ) : (
           <Like className="icon" />
         )}
-        <span>{likes.length}</span>
+        <span className="transition-all">{likes.length}</span>
       </div>
-      <div className="flex items-center gap-1" onClick={notify}>
-        <Share className="icon" />
-        <span></span>
-      </div>
+      <div className="flex items-center gap-1"></div>
     </div>
   );
 }

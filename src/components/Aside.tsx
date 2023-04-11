@@ -26,11 +26,7 @@ function Aside() {
         <MenuNavigation />
         <div className="flex flex-col gap-4">
           <ThemeSwitch />
-          <button
-            type="button"
-            className="relative"
-            onClick={() => setOpen((prev) => !prev)}
-          >
+          <div className="relative" onClick={() => setOpen((prev) => !prev)}>
             <Image
               src={user.image ? user.image : ""}
               width={40}
@@ -46,7 +42,7 @@ function Aside() {
                 Log Out
               </button>
             </div>
-          </button>
+          </div>
         </div>
       </div>
     </aside>

@@ -16,7 +16,7 @@ interface Props {
 
 function TweetItem({ tweet }: Props) {
   return (
-    <div className="b-border grid grid-cols-6 gap-2 p-2 md:flex ">
+    <div className="b-border grid grid-cols-6 gap-3 p-2 md:flex ">
       <div className="aspect-square h-12 w-12 ">
         <Link href={`@${tweet.user.username ? tweet.user.username : ""}`}>
           <Image

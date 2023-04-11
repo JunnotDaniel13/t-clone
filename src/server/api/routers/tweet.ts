@@ -64,4 +64,11 @@ export const tweetRouter = createTRPCRouter({
         },
       });
     }),
+  dislike: publicProcedure
+    .input(z.object({ like_id: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.like.delete({
+        where: { like_id: input.like_id },
+      });
+    }),
 });
