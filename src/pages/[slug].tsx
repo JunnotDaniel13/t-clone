@@ -38,7 +38,7 @@ function Profile() {
         </title>
         <meta name="description" content="Twitter Clone Home Page" />
       </Head>
-      <div className="x-border min-h-full">
+      <div className="md:x-border min-h-full">
         <div className="flex items-center gap-4  p-2">
           <div
             className="flex h-10 w-10 items-center justify-center"

@@ -32,13 +32,13 @@ function TweetItem({ tweet }: Props) {
         <div className="flex items-center justify-between gap-2 ">
           <div className="flex gap-1 truncate">
             <Link
-              href={`@${tweet.user.username ? tweet.user.username : ""}`}
+              href={`/@${tweet.user.username ? tweet.user.username : ""}`}
               className="truncate hover:underline"
             >
               <span className="w-max  font-bold">{tweet.user.name}</span>
             </Link>
             <Link
-              href={`@${tweet.user.username ? tweet.user.username : ""}`}
+              href={`/@${tweet.user.username ? tweet.user.username : ""}`}
               className="truncate hover:underline"
             >
               <span className=" text-slate-800 dark:text-slate-400">{`@${
@@ -53,8 +53,10 @@ function TweetItem({ tweet }: Props) {
             </span>
           </div>
         </div>
-        <div className="">{tweet.tweet_text}</div>
-        {tweet && <TweetActions tweet={tweet} />}
+        <Link href={`/post/${tweet.tweet_id}`}>
+          <div className="">{tweet.tweet_text}</div>
+          {tweet && <TweetActions tweet={tweet} />}
+        </Link>
       </div>
     </div>
   );

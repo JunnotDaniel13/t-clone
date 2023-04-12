@@ -23,6 +23,24 @@ export const tweetRouter = createTRPCRouter({
       },
     });
   }),
+  getSingleTweet: publicProcedure
+    .input(z.object({ tweet_id: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.tweet.findUnique({
+        where: { tweet_id: input.tweet_id },
+        include: {
+          likes: { select: { like_id: true, userId: true, user: true } },
+          user: {
+            select: {
+              emailVerified: true,
+              image: true,
+              name: true,
+              username: true,
+            },
+          },
+        },
+      });
+    }),
   getTweetsByUser: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(({ input, ctx }) => {

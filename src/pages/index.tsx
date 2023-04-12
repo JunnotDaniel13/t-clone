@@ -16,7 +16,7 @@ const Home: NextPage = () => {
     } else if (status === "unauthenticated") {
       void router.push("/login");
     }
-  }, [sessionData, router, status]);
+  }, [router, status]);
 
   const {
     data: user,

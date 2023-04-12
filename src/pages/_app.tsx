@@ -30,7 +30,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             },
           }}
         />
-        {pathname === "/compose/tweet" ? (
+        {pathname.includes("/compose/tweet") ? (
           <Component {...pageProps} />
         ) : (
           <Layout>
