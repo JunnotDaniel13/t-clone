@@ -55,8 +55,8 @@ function TweetItem({ tweet }: Props) {
         </div>
         <Link href={`/post/${tweet.tweet_id}`}>
           <div className="">{tweet.tweet_text}</div>
-          {tweet && <TweetActions tweet={tweet} />}
         </Link>
+        {tweet && <TweetActions tweet={tweet} />}
       </div>
     </div>
   );
