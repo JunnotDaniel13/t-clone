@@ -58,17 +58,19 @@ model User {
     join_date     DateTime  @default(now())
     emailVerified DateTime?
 
-    accounts  Account[]
-    sessions  Session[]
-    tweets    Tweet[]
-    followers Follower[]      @relation("followerUser")
-    following Follower[]      @relation("followedUser")
-    mentions  Mention[]
-    retweets  Retweet[]
-    likes     Like[]
-    senders   DirectMessage[] @relation("sender")
-    recipient DirectMessage[] @relation("recipient")
-    lists     List[]
+    accounts               Account[]
+    sessions               Session[]
+    tweets                 Tweet[]
+    followers              Follower[]      @relation("followerUser")
+    following              Follower[]      @relation("followedUser")
+    mentions               Mention[]
+    retweets               Retweet[]
+    likes                  Like[]
+    senders                DirectMessage[] @relation("sender")
+    recipient              DirectMessage[] @relation("recipient")
+    lists                  List[]
+    notification_sender    Notification[]  @relation("sender")
+    notification_recipient Notification[]  @relation("recipient")
 }
 
 model Tweet {
@@ -97,6 +99,8 @@ model Follower {
     user             User   @relation("followedUser", fields: [userId], references: [id])
     follower_user    User   @relation("followerUser", fields: [follower_user_id], references: [id])
 
+    notifications Notification[]
+
     @@unique([userId, follower_user_id])
 }
 
@@ -105,8 +109,9 @@ model Mention {
     userId     String
     tweet_id   String
 
-    user  User  @relation(fields: [userId], references: [id])
-    tweet Tweet @relation(fields: [tweet_id], references: [tweet_id])
+    user          User           @relation(fields: [userId], references: [id])
+    tweet         Tweet          @relation(fields: [tweet_id], references: [tweet_id])
+    notifications Notification[]
 }
 
 model Retweet {
@@ -125,8 +130,9 @@ model Like {
     tweet_id  String
     like_date DateTime @default(now())
 
-    user  User  @relation(fields: [userId], references: [id])
-    tweet Tweet @relation(fields: [tweet_id], references: [tweet_id])
+    user          User           @relation(fields: [userId], references: [id])
+    tweet         Tweet          @relation(fields: [tweet_id], references: [tweet_id])
+    notifications Notification[]
 }
 
 model DirectMessage {
@@ -134,10 +140,35 @@ model DirectMessage {
     sender_id    String
     recipient_id String
     message_text String
-    message_date DateTime
+    message_date DateTime @default(now())
 
-    user_sender   User @relation("sender", fields: [sender_id], references: [id])
-    user_recipent User @relation("recipient", fields: [recipient_id], references: [id])
+    user_sender    User @relation("sender", fields: [sender_id], references: [id])
+    user_recipient User @relation("recipient", fields: [recipient_id], references: [id])
+}
+
+model Notification {
+    notification_id   String           @id @default(cuid())
+    sender_id         String
+    recipient_id      String
+    message           String
+    type              NotificationType
+    notification_date DateTime         @default(now())
+    read              Boolean          @default(false)
+    like_id           String?
+    follow_id         String?
+    mention_id        String?
+
+    like           Like?     @relation(fields: [like_id], references: [like_id])
+    follow         Follower? @relation(fields: [follow_id], references: [follower_id])
+    mention        Mention?  @relation(fields: [mention_id], references: [mention_id])
+    user_sender    User      @relation("sender", fields: [sender_id], references: [id])
+    user_recipient User      @relation("recipient", fields: [recipient_id], references: [id])
+}
+
+enum NotificationType {
+    like
+    follow
+    mention
 }
 
 model List {
